@@ -9,6 +9,10 @@ import FacSignup from "./components/FacSignup";
 import Login from "./components/Login";
 import FacLogin from "./components/FacLogin";
 import StudentDashboard from "./components/Dashboard1";
+import Logout from "./components/Logout";
+import UpDocument from "./components/UpDocument";
+import Submissions from "./components/Submissions";
+import ViewGrades from "./components/ViewGrades";
 
 function App() {
   return (
@@ -22,7 +26,12 @@ function App() {
         <Route path="/faculty-signup" element={<FacSignup />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/facLogin" element={<FacLogin />} />
-        <Route path="/Dashboard1" element={<StudentDashboard />} /></Routes>
+        <Route path="/Dashboard1" element={<StudentDashboard />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/upload-document" element={<UpDocument />} />
+        <Route path="/submission-history" element={<Submissions />} />
+        <Route path="/view-grades" element={<ViewGrades />} />
+      </Routes>
     </Router>
   );
 }

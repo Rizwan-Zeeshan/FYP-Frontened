@@ -3,49 +3,96 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
+  const [loginDropdownOpen, setLoginDropdownOpen] = React.useState(false);
+
+  const hoverStyle = `
+    .dropdown-link:hover {
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 5px;
+    }
+  `;
 
   return (
-    <nav style={styles.nav}>
-      <h2 style={styles.logo}>Sigma Male</h2>
+    <>
+      <style>{hoverStyle}</style>
+      <nav style={styles.nav}>
+        <h2 style={styles.logo}>TriNova</h2>
 
-      <ul style={styles.menu}>
-        <li>
-          <Link to="/" style={styles.link}>Home</Link>
-        </li>
+        <ul style={styles.menu}>
+          <li>
+            <Link to="/" style={styles.link}>Home</Link>
+          </li>
 
-        <li>
-          <Link to="/about" style={styles.link}>About</Link>
-        </li>
+          <li>
+            <Link to="/about" style={styles.link}>About</Link>
+          </li>
 
-        <li
-          style={styles.dropdown}
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-        >
-          <span style={styles.link}>Join Us ▾</span>
-
-          <div
-            style={{
-              ...styles.dropdownContent,
-              opacity: open ? 1 : 0,
-              pointerEvents: open ? "auto" : "none"
-            }}
+          <li
+            style={styles.dropdown}
+            onMouseEnter={() => setLoginDropdownOpen(true)}
+            onMouseLeave={() => setLoginDropdownOpen(false)}
           >
-            <Link to="/student-signup" style={styles.dropdownLink}>
-              As a Student
-            </Link>
+            <span style={styles.link}>Login ▾</span>
 
-            <a href="/faculty-signup" style={styles.dropdownLink}>
-              As a Faculty
-            </a>
-          </div>
-        </li>
+            <div
+              style={{
+                ...styles.dropdownContent,
+                opacity: loginDropdownOpen ? 1 : 0,
+                pointerEvents: loginDropdownOpen ? "auto" : "none",
+              }}
+            >
+              <Link 
+                to="/Login" 
+                style={styles.dropdownLink} 
+                className="dropdown-link"
+              >
+                As a Student
+              </Link>
 
-        <li>
-          <Link to="/contact" style={styles.link}>Contact Us</Link>
-        </li>
-      </ul>
-    </nav>
+              <Link 
+                to="/facLogin" 
+                style={styles.dropdownLink} 
+                className="dropdown-link"
+              >
+                As a Faculty
+              </Link>
+            </div>
+          </li>
+
+          <li
+            style={styles.dropdown}
+            onMouseEnter={() => setOpen(true)}
+            onMouseLeave={() => setOpen(false)}
+          >
+            <span style={styles.link}>Join Us ▾</span>
+
+            <div
+              style={{
+                ...styles.dropdownContent,
+                opacity: open ? 1 : 0,
+                pointerEvents: open ? "auto" : "none"
+              }}
+            >
+              <Link to="/student-signup" style={styles.dropdownLink} className="dropdown-link">
+                As a Student
+              </Link>
+
+              <Link to="/faculty-signup" style={styles.dropdownLink} className="dropdown-link">
+                As a Faculty
+              </Link>
+            </div>
+          </li>
+
+          <li>
+            <Link to="/contact" style={styles.link}>Contact Us</Link>
+          </li>
+           <li>
+            <Link to="/logout" style={styles.link}>Logout</Link>
+          </li>
+        </ul>
+      </nav>
+    </>
   );
 }
 
@@ -106,13 +153,3 @@ const styles = {
     transition: "background 0.3s, color 0.3s",
   },
 };
-
-const styleSheet = document.styleSheets[0];
-const hoverRule = `
-  li div a:hover {
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 5px;
-  }
-`;
-styleSheet.insertRule(hoverRule, styleSheet.cssRules.length);

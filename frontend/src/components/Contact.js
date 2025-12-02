@@ -6,8 +6,8 @@ export function Contact() {
     <section id="contact" style={styles.section}>
       <div style={styles.content}>
         <h2 style={styles.title}>Contact Us</h2>
-        <p style={styles.text}>Email: rizwanshafique4321@gmail.com</p>
-        <p style={styles.text}>Phone: 0321-7175151</p>
+        <p style={styles.text}>Email: noone786@gmail.com</p>
+        <p style={styles.text}>Phone: 0333-xxxxxxx</p>
       </div>
     </section>
   );
@@ -16,11 +16,11 @@ export function Contact() {
 const styles = {
   section: {
     display: "flex",
-    justifyContent: "center",       // horizontal center
-    alignItems: "center",           // vertical center
+    justifyContent: "center",       
+    alignItems: "center",           
     textAlign: "center",
     padding: "20px",
-    background: "#e0f7fa",          // soft teal background
+    background: "#e0f7fa",         
   },
   content: {
     maxWidth: "500px",

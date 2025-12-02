@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// Configure axios base URL
 const API_BASE_URL = "http://localhost:8080";
 
 export default function Signup() {
@@ -27,7 +26,6 @@ export default function Signup() {
     setMessage("");
     setIsSuccess(false);
 
-    // Client-side validation
     if (form.password.length < 6) {
       setMessage("Password must be at least 6 characters.");
       setLoading(false);
@@ -47,24 +45,53 @@ export default function Signup() {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true, // Enable sending cookies for session
+          withCredentials: true, 
         }
       );
 
       setIsSuccess(true);
-      setMessage(`Signup successful! Your Student ID is: ${response.data.id}. You can now login.`);
-      setForm({ name: "", email: "", password: "", address: "" });
+      const MSG_ID = "signup-message-box";
+      const prev = document.getElementById(MSG_ID);
+      if (prev) prev.remove();
 
-      // Redirect to login after 2 seconds
-      setTimeout(() => {
-        navigate("/Login");
-      }, 2000);
+      const box = document.createElement("div");
+      box.id = MSG_ID;
+      box.innerText = `Signup successful! Your Student ID is: ${response.data.id}. You can now login.`;
+      Object.assign(box.style, {
+        width: "100%",
+        padding: "14px",
+        marginTop: "12px",
+        borderRadius: "12px",
+        background: "#2ecc71",
+        color: "#ffffff",
+        fontSize: "16px",
+        textAlign: "center",
+        boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
+        cursor: "default",
+      });
+
+      const formEl = document.querySelector("form");
+      if (formEl && formEl.parentNode) {
+        formEl.parentNode.insertBefore(box, formEl.nextSibling);
+      }
+
+      const handleFormClick = () => {
+        if (box && box.parentNode) box.remove();
+        setIsSuccess(false);
+        if (formEl) formEl.removeEventListener("click", handleFormClick);
+        navigate("");
+      };
+
+      if (formEl) {
+        formEl.addEventListener("click", handleFormClick, { once: true });
+      }
+
+      setMessage("");
+      setForm({ name: "", email: "", password: "", address: "" });
     } catch (error) {
       if (error.response) {
-        // Server responded with an error
         setMessage(error.response.data.message || "Signup failed. Please try again.");
       } else if (error.request) {
-        // Request was made but no response received
         setMessage("Network error. Please check if the server is running.");
       } else {
         setMessage("An unexpected error occurred. Please try again.");

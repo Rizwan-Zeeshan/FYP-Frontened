@@ -51,10 +51,44 @@ export default function FacSignup() {
       );
 
       setIsSuccess(true);
-      setMessage(
-        `Sign up successful! Your Faculty ID is: ${response.data.id}. Redirecting to login...`
-      );
-      setForm({ name: "", email: "", password: "", address: "", status: "" });
+      const MSG_ID = "signup-message-box";
+      const prev = document.getElementById(MSG_ID);
+      if (prev) prev.remove();
+
+      const box = document.createElement("div");
+      box.id = MSG_ID;
+      box.innerText = `Signup successful! Your Faculty ID is: ${response.data.id}. You can now login.`;
+      Object.assign(box.style, {
+        width: "100%",
+        padding: "14px",
+        marginTop: "12px",
+        borderRadius: "12px",
+        background: "#2ecc71",
+        color: "#ffffff",
+        fontSize: "16px",
+        textAlign: "center",
+        boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
+        cursor: "default",
+      });
+
+      const formEl = document.querySelector("form");
+      if (formEl && formEl.parentNode) {
+        formEl.parentNode.insertBefore(box, formEl.nextSibling);
+      }
+
+      const handleFormClick = () => {
+        if (box && box.parentNode) box.remove();
+        setIsSuccess(false);
+        if (formEl) formEl.removeEventListener("click", handleFormClick);
+        navigate("");
+      };
+
+      if (formEl) {
+        formEl.addEventListener("click", handleFormClick, { once: true });
+      }
+
+      setMessage("");
+      setForm({ name: "", email: "", password: "", address: "" });
 
       setTimeout(() => {
         navigate("/faculty-login");
@@ -112,7 +146,7 @@ export default function FacSignup() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.form}>
+      <div style={{ ...styles.form, color: "#333" }}>
         <div style={styles.iconBox}>F</div>
 
         <h2 style={styles.title}>Faculty Sign-Up</h2>
@@ -204,9 +238,9 @@ export default function FacSignup() {
           </button>
         </form>
 
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 16, color: "#333" }}>
           Already have an account?{" "}
-          <Link to="/faculty-login" style={{ color: "#4e73df", fontWeight: 600 }}>
+          <Link to="/FacLogin" style={{ color: "#4e73df", fontWeight: 600 }}>
             Login
           </Link>
         </div>

@@ -55,7 +55,7 @@ export default function FacLogin({ initialUserId = "FAC-1", userType = "faculty"
             console.log("Faculty login successful:", message);
 
             // Redirect to Dashboard
-            navigate("/Dashboard1");
+            navigate("/Dashboard2");
         } catch (error) {
             if (error.response) {
                 // Server responded with an error
